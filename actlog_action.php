@@ -1,5 +1,6 @@
 <?php
-$conn = mysqli_connect("localhost","root","","kknicdb");
+require_once __DIR__ . '/admin_guard.php';
+require_once __DIR__ . '/db.php';
 
 $id = $_POST['id'];
 $action = $_POST['action'];
