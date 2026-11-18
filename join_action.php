@@ -2,7 +2,8 @@
 session_start();
 $conn = mysqli_connect("localhost","root","","kknicdb");
 
-$user_id = $_SESSION['user_id'];
+if (!isset($_SESSION['user_id'])) { http_response_code(403); exit('Forbidden'); }
+$user_id = (int) $_SESSION['user_id'];
 $acts_id = $_POST['acts_id'];
 
 // upload file
