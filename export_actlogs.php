@@ -1,6 +1,5 @@
 <?php
-require_once __DIR__ . '/admin_guard.php';
-require_once __DIR__ . '/db.php';
+$conn = mysqli_connect("localhost","root","","kknicdb");
 
 header("Content-Type: application/vnd.ms-excel");
 header("Content-Disposition: attachment; filename=act_logs.xls");

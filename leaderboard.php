@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/db.php';
+$conn = mysqli_connect("localhost", "root", "", "kknicdb");
 
 $sql = "SELECT 
             u.firstname,
