@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect("localhost", "root", "", "kknicdb");
+require_once __DIR__ . '/db.php';
 
 // กันเข้าตรง
 if(!isset($_SESSION['user_id'])){
