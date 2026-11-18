@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect("localhost", "root", "", "kknicdb");
+require_once __DIR__ . '/db.php';
 
 if(isset($_SESSION['user_id'])){
   $user_id = $_SESSION['user_id'];
