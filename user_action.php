@@ -1,7 +1,8 @@
 <?php
+require_once __DIR__ . '/admin_guard.php';
 session_start();  // ต้องมีทุกครั้งถ้าใช้ $_SESSION
 
-$conn = mysqli_connect("localhost","root","","kknicdb");
+require_once __DIR__ . '/db.php';
 $id = intval($_POST['id']);
 $action = $_POST['action'];
 
