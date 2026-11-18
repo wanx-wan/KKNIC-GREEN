@@ -4,7 +4,7 @@ if(!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'
     header("Location: home.php");
     exit();
 }
-$conn = mysqli_connect("localhost", "root", "", "kknicdb");
+require_once __DIR__ . '/db.php';
 
 $resultuser = mysqli_query($conn, "SELECT id, firstname, role, status FROM users");
 $resultact = mysqli_query($conn, "
