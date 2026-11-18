@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect("localhost", "root", "", "kknicdb");
+require_once __DIR__ . '/db.php';
 
 if(isset($_POST['register'])){
 	$firstname = $_POST['firstname'];

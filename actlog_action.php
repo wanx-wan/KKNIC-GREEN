@@ -1,28 +1,20 @@
 <?php
-$conn = mysqli_connect("localhost","root","","kknicdb");
+require_once __DIR__ . '/admin_guard.php';
+require_once __DIR__ . '/db.php';
 
-$id = $_POST['id'];
-$action = $_POST['action'];
-
-if($action=="score"){
-    $point = intval($_POST['point']);
-
-    $q = mysqli_query($conn,"
-      SELECT a.point FROM act_logs al
-      JOIN acts a ON al.acts_id=a.id
-      WHERE al.id=$id
-    ");
-    $max = mysqli_fetch_assoc($q)['point'];
-
-    if($point >= 0 && $point <= $max){
-        mysqli_query($conn,"
-          UPDATE act_logs 
-          SET point_earn=$point, status='checked'
-          WHERE id=$id
-        ");
-        echo "ok";
-    }else{
-        echo "error";
-    }
+$id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+$point = filter_input(INPUT_POST, 'point', FILTER_VALIDATE_INT);
+if (($_POST['action'] ?? '') !== 'score' || !$id || $point === null || $point === false) {
+    http_response_code(400); exit('Invalid action');
 }
-?>
+$stmt = $conn->prepare('SELECT a.point AS max_point FROM act_logs al JOIN acts a ON al.acts_id=a.id WHERE al.id=?');
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$row = $stmt->get_result()->fetch_assoc();
+if (!$row || $point < 0 || $point > (int)$row['max_point']) {
+    http_response_code(400); exit('Invalid score');
+}
+$stmt = $conn->prepare("UPDATE act_logs SET point_earn=?, status='checked' WHERE id=?");
+$stmt->bind_param('ii', $point, $id);
+$stmt->execute();
+exit('ok');
